@@ -30,7 +30,7 @@
 #### Both NEMA 23 motors are driven using TMC4210 and TMC2208 driver chips. These chips were selected due to their SPI protocol and silentstepper modes of movement. These chips, along with a capacitor and header pins, were soldered to a prototyping board supplied by Charlie. This board then interfaces with the Shoe-Of-Brian mounted beneath the STM32 Nucleo Microcontroller. An exact pin-out description is as follows: 
 ####      | Motor Driver |    Nucleo   |
 ####      |   Board Pin  |   Board Pin |
-####      -----------------------------
+####      |--------------|-------------|
 ####      |     EN1      |     C3      |
 ####      |     EN2      |     C2      |
 ####      |     CLK      |     C7      | 
