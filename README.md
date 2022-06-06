@@ -82,6 +82,18 @@
 ####
 
 ## Difficulties
+### Software
+### Hardware
+#### This project was fraught with hardware difficulties, most stemming from the motors used for the project. Firstly, the provided (part number) motors did not have the torque required to spin the lazy susan bearings. These motors were replaced with (part number) NEMA (number) stepper motors from the Cal Poly Robotics Club. Unfortunately, one of these replacement motors has a shorting problem. (decribe here)
+
 ## Features
+### 
+
 ## Bell-and-Whistle
+###
+
 ## Operation
+### Save a drawing as "(PUT NAME HERE).hpgl" to the Nucleo.
+### Ensure the pen is in the raised position. If it is not, this can be manually adjusted by running (filename) and requesting a pen position.
+### Place a piece of paper beneith the disks.
+### Turn on both power supplies and soft reboot the Nucleo by pressing ctrl+D
