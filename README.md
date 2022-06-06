@@ -11,9 +11,10 @@
 
 ## Mecha15's Mechanical Design
 #### Team Mecha15 decided to pursue a robot similar to mechanism 94 in the book, "507 Mechanical Movements". The proposed mechanism can be found here: http://507movements.com/mm_094.html
-#### We had decided to use a pen and paper to draw. 
+ 
+#### INSERT A PICTURE OF THE SYSTEM CAD? OR CAD FILES THEMSELVES? OR EVEN STRAIGHT FROM 507 MECH MOVEMENTS?
 
-## The Discs
+### The Discs
 #### The proposed mechanism 94 operates using two discs, so we laser cut two discs out of HDPE that were donated by the Robotics Club at Cal Poly. The discs can be separated into a radial disc and a spiral disc. Both gears were cut to have a diameter of 14". 
 ### Spiral Disc
 #### The spiral disc was laser cut out of HDPE at 1/4" thickness, it was designed to have an Archimedes spiral cut into it along with a 50 gear teeth on the outer diameter. Three triangular weight-saving shapes were cut into the spiral disc to cut down on inertial load and allow the user to view drawings below.
@@ -26,7 +27,7 @@
 ### Steppers
 #### Two Wantai NEMA 23 motors were chosen for the final design, as these motors are able to produce the torque needed to move both discs independently. These motors are configures in 4-wire bi-polar stepper movement and have 200 counts-per-revolution. These motors are mounted on brackets to elevate them to the desired height. Pinion gears with 15 teeth are attached to the output shafts of the motor and are designed to mesh with the radial and spiral discs gear teeth. 
 ### Servo
-#### A single TowerPro hobby servo motor was selected to control the pen actuation. The motor was dissected and altered for manual control of the internal DC motor and potentiometer. This was done to have the ability to control the exact position of the servo. The servo was outfitted with a single cam on its output shaft that physically moves a pen up and down. 
+#### A single TowerPro hobby servo motor was selected to control the pen actuation. The motor was dissected and altered for manual control of the internal DC motor and potentiometer. The resistance of the potentiometer changes as the motor spins, and the reistsnace changes the reading of an ADC on the Nucleo. The servo is outfitted with a single cam on its output shaft that physically moves a pen up and down. All of this together allows the Nucleo to sense if the pen has successfuly been raised or lowered.
 
 ## The Drivers
 #### Both NEMA 23 motors are driven using TMC4210 and TMC2208 driver chips. These chips were selected due to their SPI protocol and silentstepper modes of movement. These chips, along with a capacitor and header pins, were soldered to a prototyping board supplied by Charlie. This board then interfaces with the Shoe-Of-Brian mounted beneath the STM32 Nucleo Microcontroller. An exact pin-out description is as follows: 
@@ -44,7 +45,7 @@
 ####      | MISO        |     MISO2   |
 
 ## Firmware
-#### The software used to impliment the robot was written in Python, for its under-the-hood libaries make calculations, matrix operations and motor movement fairly easy. The software is split up into ??6?? files:
+#### The software used to impliment the robot was written in Python, for its under-the-hood libaries make calculations, matrix operations and motor movement fairly easy. The software is split up into (??6??) files:
 #### main.py
 #### task_motor.py
 #### newtonraphson.py
@@ -52,10 +53,10 @@
 #### filereader.py
 
 ### filereader.py
-#### This file takes in a raw HPGL file, parses it by colons and prefixes, then prints each X, Y, and command coordinate to a .txt file. The command coordinate is simply either a 0 or a 1 corresponding to pen up/pen down respectively. This file will also determine if the distance between two points is too great and if interpolation is needed. This file will also determine if the requested point is in the dead zone, if it is, it will assign the closest point outside of the deadzone. This file runs as a pre-processing procedure before any finite state machine is created.
+#### This file takes in a raw .hpgl file, parses it, then saves each X, Y, and command coordinate to a .txt file. The command coordinate is simply either a 0 or a 1 corresponding to pen up/pen down respectively. This is done by seperating the .hpgl file at every semicolon, denoting different operations, and then by commas, denoting x and y coordinates. This file will also determine if the distance between two points is greater than a set threshold and interpolates between points as needed. This file will also determine if the requested point is within the workspace that the plotter can reach and adjust points if they are not possible to draw. This file runs as a pre-processing procedure before any finite state machine is created. (BEFORE TASKS START RUNNING?)
 
 ### tmc4210driver.py
-#### This file is used to instantiate the TMC4210 chip for motor control. It also defines any methods that are used by the task_motor file such as SPI.send_recv, bytearray decoders, or bytearray translators.
+#### This file is used to instantiate the TMC4210 chip for motor control. It also defines any methods that are used by the task_motor file such as SPI.send_recv, bytearray decoders, or bytearray translators. (EXPLAIN WHAT THE METHODS ACTUALLY DO)
 
 ### task_motor.py
 #### This file initiates each motor object by sending the correct byte arrays to their respective registers, setting the values of P_MUL, P_DIV, A_MAX, pulse_div, and ramp_div. A table containing these parameters is listed below. 
@@ -83,17 +84,15 @@
 
 ## Difficulties
 ### Software
+#### 100k vs 1M in the SPI. pmul/pdiv (WRITE ABOUT THESE)
 ### Hardware
-#### This project was fraught with hardware difficulties, most stemming from the motors used for the project. Firstly, the provided (part number) motors did not have the torque required to spin the lazy susan bearings. These motors were replaced with (part number) NEMA (number) stepper motors from the Cal Poly Robotics Club. Unfortunately, one of these replacement motors has a shorting problem. (decribe here)
+#### This project was fraught with hardware difficulties, most stemming from the motors used for the project. Firstly, the provided (part number) motors did not have the torque required to spin the lazy susan bearings. These motors were replaced with (part number) NEMA (number) stepper motors from the Cal Poly Robotics Club. Unfortunately, one of these replacement motors has a shorting problem when the wires are moved. With much difficulty, this has successfuly been mitigated.
 
 ## Features
-### 
+#### Test test
 
-## Bell-and-Whistle
-###
+## Bell-and-Whistle: Live Plotting
+#### The additional feature added to our system is a live plotting system that uses UART to communicate drawing progress from the Nucleo to the computer. (ADD PICTURE HERE)
 
-## Operation
-### Save a drawing as "(PUT NAME HERE).hpgl" to the Nucleo.
-### Ensure the pen is in the raised position. If it is not, this can be manually adjusted by running (filename) and requesting a pen position.
-### Place a piece of paper beneith the disks.
-### Turn on both power supplies and soft reboot the Nucleo by pressing ctrl+D
+## Operation (SHOULD I ALSO INCLUDE A SECTION ON HOW THE WIRES AND THINGS CONNECT?)
+#### To run the systme, start by saving a drawing as "(PUT NAME HERE).hpgl" to the Nucleo. Next, move the motors so that the gears are **not** meshed with the disks. This is important because the motors automatically move to their "home" position which may not be what you expect it to be. Next, ensure that the pen is in the raised position. If it isn't this can be manually adjusted by running the "(FILENAME).py". Slide a piece of paper under the disks, switch on both power supplies and soft reboot the Nucleo by pressing ctrl+D. The code will report when it has finished parsing your drawing into usable code and the motors may start moving to their home location. When all of this has finished, move the gears into place to mesh with the disks, and press any key to coninue.
