@@ -4,7 +4,6 @@
 #### Date: 06/04/2022
 
 
-
 ## The Pen Plotter Project Definition
 #### The Pen Plotter project was devised to allow teams to create a robotic drawing machine in any creative was possible. The requirements for this project were to create a 2-and-a-half degree of freedom robot that, when fed raw HPGL files, draws out shapes using any means necessary. The term "draw" was free to be interpreted in whatever manner we choose. The two main degrees of freedom are as well free to be chosen to be any motion EXCEPT the cartesian coordinate system. The remaining half degree of freedom is used as an actuator, or pen-up pen-down motion. 
 #### All devices also must be able to be ran using benchtop power supplies in the laboratory and include a "Bell and Whistle" to uniquely define this project from any similar project done before. 
@@ -12,17 +11,16 @@
 
 ![Image of assembled System](finalSystem.jpg)
 
-
-
 ## Features
 #### Our pen plotter design offers a large workspace and the radial symmetry of the system lends itself well to geometric patterened drawings. The pen plotter can raise and lower the pen to allow fo seperate shapes to be drawn. (WHAT ELSE ARE FEATURES?)
 
 ## Bell-and-Whistle: Live Plotting
-#### The additional feature added to our system is a live plotting system that uses UART to communicate drawing progress from the Nucleo to the computer. This requires a cable to be connected to the STLink in addition to the one plugged into the Shoe of Brian. To set up the live plotting, type "pip install panda" into the command prompt to download the necessary software. Then, run the plotting file by seelcting the appropriate directory and then commanding "python uart_draw.py". A window should open and display the curent pathing of the pen plotter. (INSERT PICTURE/VIDEO)
+#### The additional feature added to our system is a live plotting system that uses UART to communicate drawing progress from the Nucleo to the computer. This requires a cable to be connected to the STLink in addition to the one plugged into the Shoe of Brian. To set up the live plotting, type "pip install panda" into the command prompt to download the necessary software. Then, run the plotting file by seelcting the appropriate directory and then commanding "python uart_draw.py". A window should open and display the curent pathing of the pen plotter. (INSERT VIDEO OF UART (already uploaded) WHEN THIS IS A "PAGES")
 
 ## Operation (WE NEED A WIRING DIAGRAM FOR EVERYTING, INCLUDING SERVO AND ALL THAT)
-#### To run the systme, start by saving a drawing as "(PUT NAME HERE).hpgl" to the Nucleo. Next, move the motors so that the gears are **not** meshed with the disks. This is important because the motors automatically move to their "home" position which may not be what you expect it to be. Next, ensure that the pen is in the raised position. If it isn't this can be manually adjusted by running the "(FILENAME).py". Slide a piece of paper under the disks, switch on both power supplies and soft reboot the Nucleo by pressing ctrl+D. The code will report when it has finished parsing your drawing into usable code and the motors may start moving to their home location. When all of this has finished, move the gears into place to mesh with the disks, and press any key to coninue.
+#### To run the systme, start by saving a drawing as "simple.hpgl" to the Nucleo. Next, move the motors so that the gears are **not** meshed with the disks. This is important because the motors automatically move to their "home" position which may not be what you expect it to be. Next, ensure that the pen is in the raised position. If it isn't this can be manually adjusted by running the "simple.py". Slide a piece of paper under the disks, switch on both power supplies and soft reboot the Nucleo by pressing ctrl+D. The code will report when it has finished parsing your drawing into usable code and the motors may start moving to their home location. When all of this has finished, move the gears into place to mesh with the disks, and press any key to coninue.
 
+#### (INSERT VIDEO OF SYSTEM RUNNING WHEN THIS IS A "PAGES")
 
 ## Mecha15's Mechanical Design
 #### Team Mecha15 decided to pursue a robot similar to mechanism 94 in the book, "507 Mechanical Movements". The proposed mechanism can be found here: http://507movements.com/mm_094.html
@@ -36,7 +34,7 @@
 ### Lazy Susans
 #### Two 14" Lazy Susans (LS) were purchased from Amazon at about 17$/each. These LS are mounted between both discs to facilitate the independent movement of the discs. The discs were secured to the LS using hot glue. The LS can be found on Amazon here: https://www.amazon.com/dp/B07PW63B3Q/ref=twister_B09ZTWL4NN?_encoding=UTF8&th=1
 ### CAD
-#### The Solidworks file used in the design of this project are included in this repository. The files corresponding to the disks and pinion gears were used to laser cut the respective parts. (DONT FORGET TO ATTACH THESE)
+#### The Solidworks file used in the design of this project are included in this repository. The files corresponding to the disks and pinion gears were used to laser cut the respective parts.
 
 
 
@@ -64,7 +62,7 @@
 | MISO        | MISO2     |
 
 ## Firmware
-#### The software used to impliment the robot was written in Python, for its under-the-hood libaries make calculations, matrix operations and motor movement fairly easy. The software is split up into (??6??) files: (CHECK THIS NUMBER)
+#### The software used to impliment the robot was written in Python, for its under-the-hood libaries make calculations, matrix operations and motor movement fairly easy. The software is split up into (??6??) files: (CHECK THIS NUMBER, ADD DESCRIPTIONS FOR ALL)
 #### main.py
 #### task_motor.py
 #### newtonraphson.py
@@ -98,7 +96,9 @@
 
 
 ### newtonraphson.py
-#### The Newton Raphson file uses the Newton Raphson method of finding the roots of a non-linear equation to converge on values of theta for the motors. This is how we calculate the inverse kinematics for the system, letting us find the appropriate motor locations to move the pen to a target point.Hand calculations of the Newton Raphson process are attached below. (DONT FORGET TO ATTACH THESE) ( ![Image of assembled System](finalSystem.jpg) )CHANGE THIS TO MATCH IMAGE NAMES
+#### The Newton Raphson file uses the Newton Raphson method of finding the roots of a non-linear equation to converge on values of theta for the motors. This is how we calculate the inverse kinematics for the system, letting us find the appropriate motor locations to move the pen to a target point.Hand calculations of the Newton Raphson process are attached below.
+
+( ![Image of assembled System](finalSystem.jpg) ) (CHANGE THIS TO MATCH IMAGE NAMES FOR HAND CALCS)
 
 
 
