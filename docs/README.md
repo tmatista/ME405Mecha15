@@ -11,6 +11,8 @@
 
 ![Image of assembled System](finalSystem.jpg)
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/kh2zqIlsFNg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Features
 #### Our pen plotter design offers a large workspace and the radial symmetry of the system lends itself well to geometric patterened drawings. The pen plotter can raise and lower the pen to allow fo seperate shapes to be drawn. (WHAT ELSE ARE FEATURES?)
 
