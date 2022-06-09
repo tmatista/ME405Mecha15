@@ -19,7 +19,7 @@
 
 [![](http://img.youtube.com/vi/P3Ct4gNFd5c/0.jpg)](http://www.youtube.com/watch?v=P3Ct4gNFd5c)
 
-## Operation (WE NEED A WIRING DIAGRAM FOR EVERYTING, INCLUDING SERVO AND ALL THAT)
+## Operation
 #### To run the systme, start by saving a drawing as "simple.hpgl" to the Nucleo. Next, move the motors so that the gears are **not** meshed with the disks. This is important because the motors automatically move to their "home" position which may not be what you expect it to be. Next, ensure that the pen is in the raised position. If it isn't this can be manually adjusted by running the "simple.py". Slide a piece of paper under the disks, switch on both power supplies and soft reboot the Nucleo by pressing ctrl+D. The code will report when it has finished parsing your drawing into usable code and the motors may start moving to their home location. When all of this has finished, move the gears into place to mesh with the disks, and press any key to coninue.
 
 [![](http://img.youtube.com/vi/kh2zqIlsFNg/0.jpg)](http://www.youtube.com/watch?v=kh2zqIlsFNg)
