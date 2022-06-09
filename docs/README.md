@@ -11,22 +11,24 @@
 
 ![Image of assembled System](finalSystem.jpg)
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/kh2zqIlsFNg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 ## Features
-#### Our pen plotter design offers a large workspace and the radial symmetry of the system lends itself well to geometric patterened drawings. The pen plotter can raise and lower the pen to allow fo seperate shapes to be drawn. (WHAT ELSE ARE FEATURES?)
+#### Our pen plotter design offers a large workspace and the radial symmetry of the system lends itself well to geometric patterened drawings. The pen plotter can raise and lower the pen to allow fo seperate shapes to be drawn.
 
 ## Bell-and-Whistle: Live Plotting
-#### The additional feature added to our system is a live plotting system that uses UART to communicate drawing progress from the Nucleo to the computer. This requires a cable to be connected to the STLink in addition to the one plugged into the Shoe of Brian. To set up the live plotting, type "pip install panda" into the command prompt to download the necessary software. Then, run the plotting file by seelcting the appropriate directory and then commanding "python uart_draw.py". A window should open and display the curent pathing of the pen plotter. (INSERT VIDEO OF UART (already uploaded) WHEN THIS IS A "PAGES")
+#### The additional feature added to our system is a live plotting system that uses UART to communicate drawing progress from the Nucleo to the computer. This requires a cable to be connected to the STLink in addition to the one plugged into the Shoe of Brian. To set up the live plotting, type "pip install panda" into the command prompt to download the necessary software. Then, run the plotting file by seelcting the appropriate directory and then commanding "python uart_draw.py". A window should open and display the curent pathing of the pen plotter. 
+
+[![](http://img.youtube.com/vi/P3Ct4gNFd5c/0.jpg)](http://www.youtube.com/watch?v=P3Ct4gNFd5c)
 
 ## Operation (WE NEED A WIRING DIAGRAM FOR EVERYTING, INCLUDING SERVO AND ALL THAT)
 #### To run the systme, start by saving a drawing as "simple.hpgl" to the Nucleo. Next, move the motors so that the gears are **not** meshed with the disks. This is important because the motors automatically move to their "home" position which may not be what you expect it to be. Next, ensure that the pen is in the raised position. If it isn't this can be manually adjusted by running the "simple.py". Slide a piece of paper under the disks, switch on both power supplies and soft reboot the Nucleo by pressing ctrl+D. The code will report when it has finished parsing your drawing into usable code and the motors may start moving to their home location. When all of this has finished, move the gears into place to mesh with the disks, and press any key to coninue.
 
-#### (INSERT VIDEO OF SYSTEM RUNNING WHEN THIS IS A "PAGES")
+[![](http://img.youtube.com/vi/kh2zqIlsFNg/0.jpg)](http://www.youtube.com/watch?v=kh2zqIlsFNg)
+
+## (ADD WIRING DIAGRAM HERE)
+## (ADD TASK DIAGRAM HERE)
 
 ## Mecha15's Mechanical Design
 #### Team Mecha15 decided to pursue a robot similar to mechanism 94 in the book, "507 Mechanical Movements". The proposed mechanism can be found here: http://507movements.com/mm_094.html
- 
 ### The Discs
 #### The proposed mechanism 94 operates using two discs, so we laser cut two discs out of HDPE that were donated by the Robotics Club at Cal Poly. The discs can be separated into a radial disc and a spiral disc. Both gears were cut to have a diameter of 14". 
 ### Spiral Disc
@@ -37,10 +39,6 @@
 #### Two 14" Lazy Susans (LS) were purchased from Amazon at about 17$/each. These LS are mounted between both discs to facilitate the independent movement of the discs. The discs were secured to the LS using hot glue. The LS can be found on Amazon here: https://www.amazon.com/dp/B07PW63B3Q/ref=twister_B09ZTWL4NN?_encoding=UTF8&th=1
 ### CAD
 #### The Solidworks file used in the design of this project are included in this repository. The files corresponding to the disks and pinion gears were used to laser cut the respective parts.
-
-
-
-#### (AT SOME POINT ADD THE JYPTER FILES AND ALL THAT KIND OF STUFF)
 
 
 ## The Motors
@@ -64,45 +62,17 @@
 | MISO        | MISO2     |
 
 ## Firmware
-#### The software used to impliment the robot was written in Python, for its under-the-hood libaries make calculations, matrix operations and motor movement fairly easy. The software is split up into (??6??) files: (CHECK THIS NUMBER, ADD DESCRIPTIONS FOR ALL)
+#### The software used to impliment the robot was written in Python, for its under-the-hood libaries make calculations, matrix operations and motor movement fairly easy. The software is split up into 10 files:
 #### main.py
 #### task_motor.py
 #### newtonraphson.py
 #### tmc4210driver.py
 #### filereader.py
 #### ihm04a1Driver.py
+#### uart_draw.py
+#### uarter.py
 #### task_share.py
 #### cotask.py
-
-
-### filereader.py
-#### This file takes in a raw .hpgl file, parses it, then saves each X, Y, and command coordinate to a .txt file. The command coordinate is simply either a 0 or a 1 corresponding to pen up/pen down respectively. This is done by seperating the .hpgl file at every semicolon, denoting different operations, and then by commas, denoting x and y coordinates. This file will also determine if the distance between two points is greater than a set threshold and interpolates between points as needed. This file will also determine if the requested point is within the workspace that the plotter can reach and adjust points if they are not possible to draw. This file runs as a pre-processing procedure before the coooperative multitasking begins.
-
-### tmc4210driver.py
-#### This file is used to instantiate the TMC4210 chip for motor control. It also defines any methods that are used by the task_motor file such as SPI.send_recv, bytearray decoders, or bytearray translators. This allows us to communicate with the chips and access all of the associated functionality. (EXPLAIN WHAT THE METHODS ACTUALLY DO)
-
-
-### ihm04a1Driver.py
-#### (Explain what this does)
-
-
-### task_motor.py
-#### This file initiates each motor object by sending the correct byte arrays to their respective registers, setting the values of P_MUL, P_DIV, A_MAX, pulse_div, and ramp_div. A table containing these parameters is listed below. To briefly summarize, the constants we selected were chosen because of the high inertia of our mechanical system. The relatively low acceleration, for example, ensures that the motors have enough torque to spin without skipping steps. These values were calculated using (INSERT EXCEL HERE) and there is more information about them there as well. 
-|  Variable  |   Value    |
-|------------|------------|
-| A_MAX      | 80         |
-| pulse_div  | 10         |
-| ramp_div   | 8          |
-| P_MUL      | 156        |
-| P_DIV      | 3          |
-
-
-### newtonraphson.py
-#### The Newton Raphson file uses the Newton Raphson method of finding the roots of a non-linear equation to converge on values of theta for the motors. This is how we calculate the inverse kinematics for the system, letting us find the appropriate motor locations to move the pen to a target point.Hand calculations of the Newton Raphson process are attached below.
-
-( ![Image of assembled System](finalSystem.jpg) ) (CHANGE THIS TO MATCH IMAGE NAMES FOR HAND CALCS)
-
-
 
 ### main.py
 #### The main file is responsible for scheduling and instantiating the tasks that run all the files described above. We opted with a round-robin scheduling instead of a priority scheduling technique to make sure each task had the opportunity to run. The scheduling for the running of each task is outlined in the table below. The motor task sends the desired position to each motor and them checks if the motors have reached that position. Note that the equation_task and theta_task run at the same period and priority. This would nomrally be a problem, but only one of these tasks can run at a time. These tasks are in chage of determining desired motor positions from either a .hpgl or from a mathmatical pattern, respecitvely. The pud_driver task is in chage fof raising and lowering the pen throughout the drawing process.
@@ -115,10 +85,46 @@
 | pud_driver    | 50           | 2        |
 
 
+### filereader.py
+#### This file takes in a raw .hpgl file, parses it, then saves each X, Y, and command coordinate to a .txt file. The command coordinate is simply either a 0 or a 1 corresponding to pen up/pen down respectively. This is done by seperating the .hpgl file at every semicolon, denoting different operations, and then by commas, denoting x and y coordinates. This file will also determine if the distance between two points is greater than a set threshold and interpolates between points as needed. This file will also determine if the requested point is within the workspace that the plotter can reach and adjust points if they are not possible to draw. This file runs as a pre-processing procedure before the coooperative multitasking begins.
+
+### task_motor.py
+#### This file initiates each motor object by sending the correct byte arrays to their respective registers, setting the values of P_MUL, P_DIV, A_MAX, pulse_div, and ramp_div. A table containing these parameters is listed below. To briefly summarize, the constants we selected were chosen because of the high inertia of our mechanical system. The relatively low acceleration, for example, ensures that the motors have enough torque to spin without skipping steps. These values were calculated using the linked Excel sheet by Trinamic and there is more information about them there as well. https://www.trinamic.com/fileadmin/assets/Products/ICs_Documents/tmc429_ramp_setup.xls
+
+|  Variable  |   Value    |
+|------------|------------|
+| A_MAX      | 80         |
+| pulse_div  | 10         |
+| ramp_div   | 8          |
+| P_MUL      | 156        |
+| P_DIV      | 3          |
+
+### newtonraphson.py
+#### The Newton Raphson file uses the Newton Raphson method of finding the roots of a non-linear equation to converge on values of theta for the motors. This is how we calculate the inverse kinematics for the system, letting us find the appropriate motor locations to move the pen to a target point. Hand calculations of the Newton Raphson process are attached below, as well as a gif of a simulated drawing in action.
+
+![](handCalcsP1.png)
+![](handCalcsP2.png)
+![](handCalcsP3.png)
+![](handCalcsP4.png)
+![](rosetteDrawingAnimation.gif)
+
+
+### tmc4210driver.py
+#### This file is used to instantiate the TMC4210 chip for motor control. It also defines any methods that are used by the task_motor file such as SPI.send_recv, bytearray decoders, or bytearray translators. This allows us to communicate with the chips and access all of the associated functionality.
+
+
+### ihm04a1Driver.py
+#### This file allows for control of the IHM04A1 motor driver board which controls the servo. See above for more information on the servo control.
+
+### uart_draw.py and uarter.py
+#### These files facilitate the sending and recieving of drawing progress between the Nucleo and the computer using UART protocol. This is our "bell and whistle" for this project.
+
+### Provided code
+#### Both cotask.py and task_share.py were prided for this project. task_share.py creates the Share and Queue classes which are very useful for sharing variables between tasks. cotask.py drives the cooperative multitasking that is central to the project. 
+
+
 ## Difficulties
 ### Software
 #### Many issues faced while coding this project can be attributed to an error found in the creation of the serial bus used to communicate with the TMC4210 chips. The baudrate of this connection was mistakenly set as 100,000 rather than 1,000,000. Once this issue was addressed, the motors worked much more consistantly.
-### Hardware(FILL IN THE BLANKS HERE)
-#### This project was fraught with hardware difficulties, most stemming from the motors used for the project. Firstly, the provided (part number) motors did not have the torque required to spin the lazy susan bearings. These motors were replaced with (part number) NEMA (number) stepper motors from the Cal Poly Robotics Club. Unfortunately, one of these replacement motors has a shorting problem when the wires are moved. With much difficulty, this has successfuly been mitigated.
-
-
+### Hardware
+#### This project was fraught with hardware difficulties, most stemming from the motors used for the project. Firstly, the provided stepper motors did not have the torque required to spin the lazy susan bearings. These motors were replaced with NEMA 23 stepper motors from the Cal Poly Robotics Club. Unfortunately, one of these replacement motors has a shorting problem when the wires are moved. With much difficulty, this has successfuly been mitigated.
