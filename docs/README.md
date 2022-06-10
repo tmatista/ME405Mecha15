@@ -24,8 +24,8 @@
 
 [![](http://img.youtube.com/vi/kh2zqIlsFNg/0.jpg)](http://www.youtube.com/watch?v=kh2zqIlsFNg)
 
-## (ADD WIRING DIAGRAM HERE)
-## (ADD TASK DIAGRAM HERE)
+![Wiring Diagram](WD.PNG)
+![High-Level Task Diagram](TD.PNG)
 
 ## Mecha15's Mechanical Design
 #### Team Mecha15 decided to pursue a robot similar to mechanism 94 in the book, "507 Mechanical Movements". The proposed mechanism can be found here: http://507movements.com/mm_094.html
@@ -107,7 +107,8 @@
 ![](handCalcsP3.png)
 ![](handCalcsP4.png)
 ![](rosetteDrawingAnimation.gif)
-
+![](94_2.jpg)
+![](94_1.jpg)
 
 ### tmc4210driver.py
 #### This file is used to instantiate the TMC4210 chip for motor control. It also defines any methods that are used by the task_motor file such as SPI.send_recv, bytearray decoders, or bytearray translators. This allows us to communicate with the chips and access all of the associated functionality.
